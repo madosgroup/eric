@@ -82,14 +82,14 @@ class HomeView(ListView):
     """ Home View Definition """
 
     model = Moto
-    paginate_by = 1
+    paginate_by = 10
     # ordering = "created"
     ordering = "-id"
-    paginate_orphans = 1
+    paginate_orphans = 10
     context_object_name = "Moto"
     def get_context_data(self, **kwargs):
         context = super(HomeView, self).get_context_data(**kwargs)
-        list_vh =Moto.objects.all()
+        list_vh =Moto.objects.filter(Type='Bikes')
         paginator = Paginator(list_vh, self.paginate_by)
         page = self.request.GET.get('page')
         file_exams = paginator.page(page)
@@ -108,41 +108,66 @@ class BikesView(ListView):
     """ Home View Definition """
 
     model = Moto
-    paginate_by = 1
+    paginate_by = 10
     # ordering = "created"
     ordering = "-id"
-    paginate_orphans = 1
+    paginate_orphans = 10
     context_object_name = "Moto"
     def get_context_data(self, **kwargs):
         context = super(BikesView, self).get_context_data(**kwargs)
-        list_vh =Moto.objects.filter(Type='Bikes')
+        list_vh =Moto.objects.filter(Type='MOTO')
         paginator = Paginator(list_vh, self.paginate_by)
         page = self.request.GET.get('page')
         file_exams = paginator.page(page)
-        sum_of_bajaj = Moto.objects.all().filter(Type='BAJAJ').count()
-        sum_of_moto = Moto.objects.all().filter(Type='MOTO').count()
+        sum_of_bajaj = Moto.objects.filter(Type='BAJAJ').count()
+        sum_of_moto = Moto.objects.filter(Type='MOTO').count()
         context.update({'sum_of_bajaj': sum_of_bajaj})
         context.update({'sum_of_moto': sum_of_moto})
         context['list_exams'] = file_exams
+        context['object_list'] = list_vh
+        context['name'] = 'Moto'
         return context
 class BajajView(ListView):
     """ Home View Definition """
 
     model = Moto
-    paginate_by = 1
+    paginate_by = 10
     # ordering = "created"
     ordering = "-id"
-    paginate_orphans = 1
+    paginate_orphans = 10
     context_object_name = "Moto"
     def get_context_data(self, **kwargs):
         context = super(BajajView, self).get_context_data(**kwargs)
-        list_vh =Moto.objects.filter(Type='Bajaj')
+        list_vh =Moto.objects.filter(Type='BAJAJ')
         paginator = Paginator(list_vh, self.paginate_by)
         page = self.request.GET.get('page')
         file_exams = paginator.page(page)
-        sum_of_bajaj = Moto.objects.all().filter(Type='BAJAJ').count()
-        sum_of_moto = Moto.objects.all().filter(Type='MOTO').count()
+        sum_of_bajaj = Moto.objects.filter(Type='BAJAJ').count()
+        sum_of_moto = Moto.objects.filter(Type='MOTO').count()
         context.update({'sum_of_bajaj': sum_of_bajaj})
         context.update({'sum_of_moto': sum_of_moto})
         context['list_exams'] = file_exams
+        context['object_list'] = list_vh
+        context['name'] = 'Bajaj'
         return context
+
+
+def search(request):
+        q = request.GET['q']
+        print(q)
+        print(q)
+        print(q)
+        print(q)
+        print(q)
+        print(q)
+        print(q)
+        print(q)
+        print(q)
+        print(q)
+        print(q)
+        print(q)
+        print(q)
+        name = Moto.objects.filter(Numero_chasis__icontains=q)
+        context={}
+        context['object_list']=name
+        return render(request,'home/moto_list.html',context)
