@@ -154,19 +154,6 @@ class BajajView(ListView):
 
 def search(request):
         q = request.GET['q']
-        print(q)
-        print(q)
-        print(q)
-        print(q)
-        print(q)
-        print(q)
-        print(q)
-        print(q)
-        print(q)
-        print(q)
-        print(q)
-        print(q)
-        print(q)
         name = Moto.objects.filter(Numero_chasis__icontains=q)
         context={}
         context['object_list']=name
